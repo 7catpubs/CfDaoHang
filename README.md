@@ -204,7 +204,7 @@ NaviHive 是一个精美的网站导航管理系统，帮助你整理和管理�
 #### 1. 克隆仓库
 
 ```bash
-git clone [https://github.com/cyberxsboy/CfDaoHang.git]
+git clone https://github.com/cyberxsboy/CfDaoHang.git
 cd CfDaoHang
 ```
 
