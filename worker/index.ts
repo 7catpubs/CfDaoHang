@@ -207,15 +207,16 @@ export default {
                                 { status: 400 }
                             );
                         }
-                        data.url = withDefaultProtocol(data.url);
+                        const paddedUrl = withDefaultProtocol(data.url);
                         try {
-                            new URL(data.url);
+                            new URL(paddedUrl);
                         } catch {
                             return Response.json(
                                 { success: false, message: "无效的URL格式" },
                                 { status: 400 }
                             );
                         }
+                        data.url = paddedUrl.trim();
                     }
 
                     if (data.icon !== undefined && data.icon !== "") {
@@ -225,15 +226,16 @@ export default {
                                 { status: 400 }
                             );
                         }
-                        data.icon = withDefaultProtocol(data.icon);
+                        const paddedIcon = withDefaultProtocol(data.icon);
                         try {
-                            new URL(data.icon);
+                            new URL(paddedIcon);
                         } catch {
                             return Response.json(
                                 { success: false, message: "无效的图标URL格式" },
                                 { status: 400 }
                             );
                         }
+                        data.icon = paddedIcon.trim();
                     }
 
                     const result = await api.updateSite(id, data);
@@ -554,8 +556,7 @@ function validateConfig(data: ConfigInput): { valid: boolean; errors?: string[] 
     return { valid: errors.length === 0, errors };
 }
 
-function withDefaultProtocol(raw?: string, defaultProto = "https://") {
-    if (!raw) return raw;
+function withDefaultProtocol(raw: string, defaultProto = "https://"): string {
     const s = raw.trim();
     return /^[a-zA-Z][a-zA-Z0-9+.-]*:\/\//.test(s) ? s : `${defaultProto}${s}`;
 }
